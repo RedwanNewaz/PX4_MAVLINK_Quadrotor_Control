@@ -11,7 +11,7 @@ This repository contains code and resources for controlling and simulating a qua
 2. Configure JMAVSim by following the instructions in the [JMAVSim repository](https://docs.px4.io/main/en/sim_jmavsim/)
 3 . Clone this repository:
 ```bash
-git clone
+git clone https://github.com/RedwanNewaz/PX4_MAVLINK_Quadrotor_Control.git --recursive
 ```
 4. Navigate to the repository directory and create a build directory:`
 ```bash
