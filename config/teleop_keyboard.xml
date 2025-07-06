@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="MainTree">
+    <Parallel failure_count="1"
+              success_count="-1">
+      <AsyncSequence>
+        <KeyboardInput keyboard_cmd="{keyboard_command}"/>
+        <Delay delay_msec="50">
+          <ReactiveFallback>
+            <ReactiveSequence>
+              <SendVelocity keyboard_cmd="{keyboard_command}"
+                            velocity_cmd="{velocity_cmd}"/>
+              <VelocityControl velocity_cmd="{velocity_cmd}"
+                               gain="0.5"
+                               control_cmd="{control_cmd}"/>
+            </ReactiveSequence>
+            <SendSpecialCommand keyboard_cmd="{keyboard_command}"/>
+          </ReactiveFallback>
+        </Delay>
+      </AsyncSequence>
+      <ManualControl/>
+    </Parallel>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="KeyboardInput"
+            editable="true">
+      <output_port name="keyboard_cmd"/>
+    </Action>
+    <Action ID="ManualControl"
+            editable="true"/>
+    <Action ID="SendSpecialCommand"
+            editable="true">
+      <input_port name="keyboard_cmd"/>
+    </Action>
+    <Action ID="SendVelocity"
+            editable="true">
+      <input_port name="keyboard_cmd"/>
+      <output_port name="velocity_cmd"/>
+    </Action>
+    <Action ID="VelocityControl"
+            editable="true">
+      <input_port name="velocity_cmd"
+                  default="{velocity_cmd}"/>
+      <input_port name="gain"
+                  default="0.99"/>
+      <output_port name="control_cmd"
+                   default="{control_cmd}"/>
+    </Action>
+  </TreeNodesModel>
+
+</root>
