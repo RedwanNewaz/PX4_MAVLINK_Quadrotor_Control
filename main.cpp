@@ -53,24 +53,7 @@ int main(int argc, char** argv) {
     std::cout << "  ESC: Exit\n\n";
 
     // Run the behavior tree in a loop
-    while (true) {
-        NodeStatus status = tree.tickWhileRunning();
-
-        if (status == NodeStatus::FAILURE) {
-            std::cout << "Exiting teleoperation\n";
-            break;
-        }
-
-        // Small delay to prevent excessive CPU usage
-//        usleep(50000); // 50ms delay (20Hz update rate)
-//        usleep(50); // 50ms delay (20KHz update rate)
-    }
-
-
-
-
-
-
+    tree.tickWhileRunning();
     close(sockfd);
     return 0;
 }

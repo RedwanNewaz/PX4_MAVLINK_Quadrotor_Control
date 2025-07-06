@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root BTCPP_format="4">
-  <BehaviorTree ID="MainTree">
-    <Parallel failure_count="1"
-              success_count="-1">
-      <AsyncSequence>
-        <KeyboardInput keyboard_cmd="{keyboard_command}"/>
-        <Delay delay_msec="50">
-          <ReactiveFallback>
-            <ReactiveSequence>
-              <SendVelocity keyboard_cmd="{keyboard_command}"
-                            velocity_cmd="{velocity_cmd}"/>
-              <VelocityControl velocity_cmd="{velocity_cmd}"
-                               gain="0.5"
-                               control_cmd="{control_cmd}"/>
-            </ReactiveSequence>
-            <SendSpecialCommand keyboard_cmd="{keyboard_command}"/>
-          </ReactiveFallback>
-        </Delay>
-      </AsyncSequence>
-      <ManualControl/>
-    </Parallel>
+<root BTCPP_format="4" main_tree_to_execute="MainTree">
+  <BehaviorTree ID="KeyboardTeleop">
+    <AsyncSequence>
+      <KeyboardInput keyboard_cmd="{keyboard_command}"/>
+      <Delay delay_msec="50">
+        <ReactiveFallback>
+          <ReactiveSequence>
+            <SendVelocity keyboard_cmd="{keyboard_command}"
+                          velocity_cmd="{velocity_cmd}"/>
+            <VelocityControl velocity_cmd="{velocity_cmd}"
+                             gain="0.5"
+                             control_cmd="{control_cmd}"/>
+          </ReactiveSequence>
+          <SendSpecialCommand keyboard_cmd="{keyboard_command}"/>
+        </ReactiveFallback>
+      </Delay>
+    </AsyncSequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="MainTree" >
+    <KeepRunningUntilFailure>
+      <Parallel failure_count="1"
+                success_count="-1">
+        <SubTree ID="KeyboardTeleop"
+                 _autoremap="true"/>
+        <ManualControl/>
+      </Parallel>
+    </KeepRunningUntilFailure>
   </BehaviorTree>
 
   <!-- Description of Node Models (used by Groot) -->
